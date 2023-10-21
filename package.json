@@ -25,5 +25,10 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.11"
-  }
+  },
+  "description": "This is a [Vite](https://vitejs.dev) project together with React.",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

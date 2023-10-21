@@ -1,38 +1,103 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { useEffect, useState } from "react";
+import "./style.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [jokes, setJokes] = useState("");
+  const [favorite, setFavorite] = useState(false);
+  const [favoriteJokes, setFavoriteJokes] = useState<string[]>([]);
+
+  useEffect(() => {
+    favoriteJoke();
+    newJoke();
+  }, []);
+
+  useEffect(() => {
+    newJoke();
+  }, {});
+
+  const newJoke = () => {
+    fetchJoke();
+  };
+
+  const handleClick = () => {
+    setFavorite(!favorite);
+    if (!favorite) {
+      setFavoriteJokes([...favoriteJokes, jokes]);
+    }
+  };
+
+  const removeFavorite = (index) => {
+    const confirm = window.confirm("Deseja remover dos favoritos?");
+    if (confirm) {
+      const updatedFavorites = [...favoriteJokes];
+      updatedFavorites.splice(index, 1);
+      setFavoriteJokes(updatedFavorites);
+      localStorage.setItem("favoriteJokes", JSON.stringify(updatedFavorites));
+    }
+  };
+
+  const favoriteJoke = () => {
+    const storedFavoriteJokes = localStorage.getItem("favoriteJokes");
+    if (storedFavoriteJokes) {
+      setFavoriteJokes(JSON.parse(storedFavoriteJokes));
+    }
+  };
+
+  useEffect(() => {
+    localStorage.setItem("favoriteJokes", JSON.stringify(favoriteJokes));
+  }, [favoriteJokes]);
+
+  const fetchJoke = () => {
+    fetch("https://api.chucknorris.io/jokes/random")
+      .then((response) => response.json())
+      .then((data) => setJokes(data.value))
+      .catch((error) => console.error(error));
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
+    <div className="container">
+      <div className="img">
+        <img className="aprovado" src="src/assets/aprovado.jpg" />
       </div>
-      <h1>React + Vite</h1>
-      <h2>On CodeSandbox!</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR.
-        </p>
 
-        <p>
-          Tip: you can use the inspector button next to address bar to click on
-          components in the preview and open the code in the editor!
-        </p>
+      <h1 className="tittle"> CHUCK NORRIS JOKES</h1>
+
+      <div className="sla">
+        <p className="piadas"> {jokes} </p>
+
+        <button className="btn-heart" onClick={handleClick}>
+          <img
+            src={
+              favorite
+                ? "src/assets/heart_filled.svg"
+                : "src/assets/heart_empty.svg"
+            }
+            alt={favorite ? "Desfavoritar" : "Favoritar"}
+          />
+        </button>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <button className="joke-btn" onClick={newJoke}>
+        {" "}
+        Nova Piada{" "}
+      </button>
+
+      <div>
+        <h2 className="tlt-fav">Favoritos:</h2>
+        <ul>
+          {favoriteJokes.map((joke, index) => (
+            <li key={index}>
+              {joke}
+              <button
+                className="remove-btn"
+                onClick={() => removeFavorite(index)}
+              >
+                Remover
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

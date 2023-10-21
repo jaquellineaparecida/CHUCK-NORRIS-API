@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Raleway:wght@600;700&display=swap");
+
+body {
+  margin-left: 2em;
+  margin-right: 2em;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Poppins;
+  background-color: #f8f4f4;
+  justify-content: center;
+}
+
+button {
+  border-radius: 10px;
+  border: none;
+  transition:
+    transform 300ms ease-in-out,
+    scale 300ms ease-in-out 150ms;
+}
+
+button:hover {
+  transform: translateY(-1px) scale(1.1);
+}
+
+.btn-heart {
+  background-color: transparent;
+  margin-left: 10px;
+}
+
+.tittle {
+  text-align: center;
+}
+
+.container {
+  justify-content: center;
+}
+
+.sla {
+  display: flex;
+  justify-content: center;
+}
+
+.piadas {
+  background-color: #ebd4d4;
+  border-radius: 10px;
+  width: auto;
+  height: auto;
+  padding: 1em 1em 1em 1em;
+}
+
+.joke-btn {
+  font-family: Poppins;
+  font-weight: 600;
+  background-color: #785641;
+  color: #fff;
+  border-radius: 10px;
+  width: 7em;
+  height: 3em;
+  margin-top: 1em;
+}
+
+.tlt-fav {
+  margin-top: 2em;
+}
+
+li {
+  margin-bottom: 10px;
+}
+
+.remove-btn {
+  font-family: Poppins;
+  font-weight: 500;
+  background-color: #785641;
+  border-radius: 10px;
+  width: 6em;
+  height: 2em;
+  margin-top: 1em;
+  margin-left: 1em;
+  color: #fff;
+}
+
+.aprovado {
+  width: 15em;
+  height: 15em;
+}
+
+.img {
+  display: flex;
+  justify-content: center;
+}
