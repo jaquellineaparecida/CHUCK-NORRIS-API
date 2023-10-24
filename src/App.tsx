@@ -10,13 +10,8 @@ function App() {
   const [favoriteJokes, setFavoriteJokes] = useState<string[]>([]);
 
   useEffect(() => {
-    favoriteJoke();
     newJoke();
   }, []);
-
-  useEffect(() => {
-    newJoke();
-  }, {});
 
   const newJoke = () => {
     fetchJoke();
@@ -26,6 +21,10 @@ function App() {
     setFavorite(!favorite);
     if (!favorite) {
       setFavoriteJokes([...favoriteJokes, jokes]);
+      localStorage.setItem(
+        "favoriteJokes",
+        JSON.stringify([...favoriteJokes, jokes]),
+      );
     }
   };
 
@@ -39,16 +38,13 @@ function App() {
     }
   };
 
-  const favoriteJoke = () => {
+  useEffect(() => {
     const storedFavoriteJokes = localStorage.getItem("favoriteJokes");
     if (storedFavoriteJokes) {
       setFavoriteJokes(JSON.parse(storedFavoriteJokes));
     }
-  };
-
-  useEffect(() => {
-    localStorage.setItem("favoriteJokes", JSON.stringify(favoriteJokes));
-  }, [favoriteJokes]);
+    fetchJoke();
+  }, []);
 
   const fetchJoke = () => {
     fetch("https://api.chucknorris.io/jokes/random")
